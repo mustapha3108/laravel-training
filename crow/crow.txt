@@ -1,0 +1,257 @@
+this is a text file to summarize laravel/livewire
+
+//TODO:
+    an app where i implement redis caching/horizon, email password recovery, octane
+    SUPERVISOR
+    deep dive eloquent/sql
+    NOTZ TO SELF, FIRST LETTER OF MODEL BETTER BE CAPITALIZED
+    app service provider is the shit, basically everything you write in the boot is available everywhere
+
+
+1/basic routing and links
+    -Route::get('/', function () {
+       return view('home');
+    });
+you can also use that to return variable and arrays, for when building an api
+it is recommended to give routes names
+    -Route::get('/', function () {
+       return view('home');
+    })->name('home');
+there is a shortcut
+    -Route::view('/', 'home')->name('home');
+if home is inside a directory inside views, let's say mypages then the return is gonna be mypages.home
+you can also pass arrays of data in the return or right after the page name, remmeber arrays and like this -['stuff'=>25]
+then call it in blade like {{$stuff}}
+links are like normal html or preferably:
+    -href="{{ route('home') }}"
+
+rerouting is done like this: return redirect()->route('home');
+
+
+you can also do this instead of writing logic in web
+    Route::get('/', [controller_name::class, 'method_name])->name('home');
+    then write everything else in the controller class right until the return view thing and including the arguments
+    also php artisan make:controller
+
+
+2/components:
+make a component directory inside your views directory and just write your component
+you can use it like this <x-mycomponent/>
+you can have slots like {{$slot}} and custom ones like {{$title}}
+you use them like this:
+    -<x-mycomponent>
+        <x-slot:title>
+            <h1>welcome to the HOME/CROW page</h1>
+        </x-slot:title>
+        <p>other main stuff</p> //this being the default {{$slot}}
+    </x-mycomponent>
+in order to merge html options like classes, href and all you add this inside the component
+    -{{ $attributes }}
+if you need to merge classes and you don't want duplications and weird css error do this
+    -{{ $attributes->merge(['class' => 'put your tailwind here']) }}
+
+3/blade tools
+directives like [@php @endphp] [@if() @else @endif]
+dynamic classes like this class="{{ $stuff ?  "text-9xl" : "text-amber-900"}} //makes sure to put a space after it, stuff is just a bool
+checking current page like this request()->is('about'), that returns true or false
+@props exists can't be bothered to learn them, laracast ep 5
+you can call variable passed to blade by {{$variable}}, fancy arrays {{$variable['id]}}, eloquent variable {{$variable->id}}
+
+
+3/Dynamic routing
+in web.php
+    -Route::get('/about/{id}', function($id){
+        return view('dy', ['id' => $id]);
+    })->name('dy');
+and the link is
+    -href='{{ route('dy', ['id'=>$ar['id'] ])  }}'
+keep in mind you can do this on multiple leevls, not just one dynamic attribute
+
+
+4/helpful laravel tools
+find first match in an array, helpful for databases and such
+        $item = Arr::first($items, function($i) use ($id){
+            return $i['id'] == $id;
+        });
+        $item = Arr::first($items, fn($item) => $item['id']==$id);
+
+
+5/databases
+--migrations and ORM
+DON'T FORGET THE STUPID CASCADES
+you can find the schema in the databases folder then migrations
+to modify the tables, keep in minds everything is deleted first: php artisan migrate:fresh
+to make new migration: php artisan make:migration and then php artisan migrate
+in your migrations file there are tons of schemas and methods that are like this:
+    Schema::create('crowy_ones', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->integer('kill_count');
+            $table->text('super_power_description')->index();
+            $table->timestamps();
+             $table->foreignId('user_id')->constrained('users', 'id')->onDelete('cascade'), although in this case you can ommit the 'id'
+                ||
+             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'), this is questionable
+                ||
+             $table->foreignId(other_model_name::class, 'user_id'), you can ommit the name, it will automatically do modelname_id
+        });
+keep in mind that's the up methods, the dow usually has: Schema::dropIfExists('crowy_ones');
+now for options:
+    ->index(): faster search if rows have values in commun
+    ->primary(): primary key, although id() is a shorthand for primary int
+    ->unique()
+    ->fullText(): i believe for matching
+    ->nullable()
+    ->default(value)
+
+--models
+-php artisan make:model name_of_model -m, -m for migration
+or you can add this to the model: protected $table = 'name_of_table'
+in order to make a variable assignable: protected $fillable =['var1', 'var2']
+it already comes preloaded with :: find(), create(), all()
+much like migrations and tables having foregn keys, models have relationships:
+    public function Lubas(){
+        return $this->hasMany(Luba::class);
+    }
+    public function Wubas(){
+        return $this->belongsTo(Wuba::class, 'wuba_id');
+    }
+    brlongstomany when you have a pivote table in which case $this->belongsTomany(Wuba::class, foreignPivotKey: 'wuba_id') or relatedPivotKey, no idea which one is which
+     while at it there is also name_of_model::find(2)->Lubas()->attach(id) and detach() i guess
+then to get them just name_of_model::find(2)->Lubas (name_of_second_model's method, like the one above)
+or just the inverse, ::all, ::first(), just the normal stuff, you can also do things like name_of_model::find(2)->Lubas->first()->wuba_name
+the previous one was lazy loading which is not very performant in some situations so here is eager loading to avoid something called n+1 problem
+name_of_model::with('lubas')->get()
+there is also the load thing like $wuba->load([ or just ->withrelationshipautoloading()
+                                        'luba.name',
+                                        'luba.id'
+                                    ])
+or Model::automaticallyeagerloadrelationships() in appserviceprovider.php function boot
+
+when you wanna find something with something other than id
+    -$killer = serialkiller::where('killer_name', request('killer_name'))->firstOrFail(), for multiple columns chain where(), you can replace firstorfail with get
+
+
+--factories
+-php artisan make:factory name_of_modelFactory
+it helps you populate your databases
+php artisan tinker App\Models\name_of_model::factory(number of rows)->create()
+yu can also have a second method in the factory, can't be bothered to learn how tha works
+for foreign key columns name_of_model(the other one);;factory()
+
+--seeders
+just call your factories "comands" in your factory file
+
+--pagination: just paginate()/simplepaginate/cursorpaginate instead of get() when fetching from database/model and then {{$wubas->links()}} in blade
+
+--forms and getting stuff into php
+normal form like always + @csrf + post request instead of get in web
+you can get your variables like request('name')
+
+--validation
+well you can do request()->validate([
+        'wuba_name'=>['required', 'min:3', 'exists:wubas,name'], //exists, unique: database_name, row
+        'wuba_kill'=>['required', 'numeric', 'min:3', function($attribute, $value, $fail){ //this function is for custom validation
+                                    if($value<3){
+                                        $fail('not much of a serial killer');}}]
+    ],[
+        'wuba_name.required' => 'The Wuba must have a name! yo', //and these are custom error messages
+        'wuba_name.min' => 'The Wuba name must be at least :min characters. yo',
+        'kill_count.required' => 'You need to enter the kill count. yo',
+        'kill_count.integer' => 'Kill count must be a number. yo',
+    ]);
+
+    to show messages and change logic you can do this in blade:
+    @error('field_name') something here, could be html or tailwind or {{$message}} anything really @enderror
+
+    passwords have a special class like this Password::min(1)->letters()
+
+
+
+
+
+--AUTHENTICATION
+Auth::login($user) or just array of user, USE THIS WHEN FIRST CREATING A USER
+Auth::attempt($user) or just an array of user, USE THIS WHEN LOGGING IN SOMEONE
+    it returns true or false so if false throw a validation exception like this
+    -if ($authed == false){
+            throw ValidationException::withMessages([
+                'password'=>'wrong password mate'
+            ]);
+    }
+    also make sure to do this for security: request()->session()->regenerate()
+Auth::logout is for logging out the current user
+
+    ---GUARDS
+    GUARDS are a way to let create models/databases that you can log in other than users
+
+    first create your model and make sure it extends autheticatable:
+        -use Illuminate\Foundation\Auth\User as Authenticatable;
+        -class mymodel extends Authenticatable
+
+    second in config/auth.php add another guard and provider under the already existing ones, they are elements in an array
+        -'guards' => [
+                    'web' => [
+                        'driver' => 'session',
+                        'provider' => 'users',
+                    ],
+                    'grim' => [ //grim is just a random name i picked
+                        'driver' => 'session',
+                        'provider' => 'killers',
+                    ],
+        ],'providers' => [
+                    'users' => [
+                        'driver' => 'eloquent',
+                        'model' => env('AUTH_MODEL', App\Models\User::class),
+                    ],
+                    'killers' => [
+                        'driver' => 'eloquent',
+                        'model' => env('AUTH_MODEL', App\Models\mymodel::class),
+                    ],
+        ]
+
+    third just use your Auth façade like you do normally just add guard('grim') like Auth::guard('grim')->login() or Auth::guard('grim')->check()
+    in blade it's auth('grim') and guest('grim')
+
+    --IMPORTANT
+        -attempt needs a password column in the table
+        -to do global guest you need custom logic
+        -don't forget throwing validation exception if an already logged in user tries to log in or sign up, especially if you have multiple guards
+
+
+    --Authorization
+    well you can do it inline, middlewear is just what gets executed between receiving a request and serving a page afterall
+    tools like is/isnot and check and ->user are useful
+    policices exist
+    but the main auz guy is the gates, define then is serviceprovider boot and refrence them wherever ya want
+        -Gate::define('edit_victim', function($killer, $victim){
+                return $victim->serialkillers->is($killer);
+            });
+    it has to return true or false, can be used like gate::authorize('name_of_gate', args), allows, denies
+    the $user argument gets passed auto in web no need to write it in args
+    ---if ya are using a guard do it like this
+    -------Gate::forUser(Auth::guard('grim')->user())->authorize('edit_victim', victim::find($id))
+    some useful things like can directive and can method can also be used but only with web guard, just use if and logic for rest
+    there is also the middlewear shorthand that can check if auth, like middlewear('auth') if fails it looks for login named route
+    for guards it's middlewear('auth:grim') and if fails looks for grim.login
+    there is also ->can('gate_name', args) that can be used inline, usually args are strings 'id' for example coming from the {id} thing
+
+
+    --queues
+    instead od send() you can do queue()/dispatch(function(){})
+    php artisan make:job name_of_job
+    then write your logic in the handler method
+    name_of_job::dispatch()
+    php artisan queue:work
+
+
+    --Mailing
+    php artisan make:mail, has a blade template + php file, logic in constructor, content is blade, use with for variables like this:
+        return new Content(
+            view: 'mail.mailtest',
+            with: [
+                'person'=>"shelldon"
+            ]
+        );
+    configuting .env and config/mail.php for smtp server
+    Mail::to('tueure750@gmail.com')->queue(new crowtest()); or send instead of queue, queue is preffered

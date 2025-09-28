@@ -1,6 +1,6 @@
 <div class="flex gap-6 flex-col justify-center items-center">
 
-    <div>
+    <div class="flex gap-3 justify-center">
         <form class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4"
             wire:submit="createuser">
 
@@ -21,28 +21,47 @@
                 wire:model="password"/>
                 @error('password') {{ $message }} @enderror
 
-            <input type="submit" class="btn btn-accent" value="create user" wire:loading.remove>
-            <input type="submit" class="btn btn-accent" value="loading" wire:loading>
-
+            <input type="submit" class="btn btn-accent" value="create user" wire:loading.attr="disabled" wire:target="createuser" @auth disabled @endauth>
+            @error('logged') {{ $message }} @enderror
         </form>
 
-        <div x-data="{x:''}">
-            <p x-on:post-created.window = "x = 'bazinga' " x-text="x"></p>
+        <div class="flex flex-col justify-start items-center gap-6">
+        <form class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4"
+            wire:submit="loginuser">
+
+            <legend class="fieldset-legend" >login user</legend>
+
+            <label class="label">email</label>
+            <input type="email" class="input focus:outline-0" placeholder="mdex@dex.com"
+                wire:model="email2"/>
+                @error('email2') {{ $message }} @enderror
+
+            <label class="label">password</label>
+            <input type="password" class="input focus:outline-0" placeholder="dex123"
+                wire:model="password2"/>
+                @error('password2') {{ $message }} @enderror
+
+            <input type="submit" class="btn btn-accent" value="create user" wire:loading.attr="disabled" wire:target="loginuser" @auth disabled @endauth>
+            @error('logged') {{ $message }} @enderror
+        </form>
+        <button @guest disabled @endguest class="btn btn-error" wire:click="logoutuser">@auth logout @endauth @guest you are logged out @endguest</button>
         </div>
 
-
     </div>
-    
-    TODO: MAKE A PROPER DISPATCH DEMONSTRATION, PASS DATA, BOTH ALPINE AND JS
 
-    <div class="flex gap-3 flex-wrap">
+    <button class="btn btn-accent" wire:click="fac">create random users</button>
+
+    <div class="flex gap-3 flex-wrap" id="user_container">
         @foreach ($users as $user)
-            <div class="border-1 border-primary rounded-xl p-4">
+            <div class="border-1 border-primary rounded-xl p-4 text-center" id="user @json($user->id)">
                 <h3>{{ $user->name }}</h3>
                 <p>{{ $user->email }} </p>
-
+                <button class="btn btn-error" wire:click="deleteuser(@json($user->id))"> deleter user @json($user->id)</button>
             </div>
         @endforeach
+    </div>
+    <div>
+        {{$users->links()}}
     </div>
 
 </div>

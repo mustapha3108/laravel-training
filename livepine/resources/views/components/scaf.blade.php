@@ -12,7 +12,7 @@
 
     {{ $slot }}
 
-    <div class="flex justify-around items-center">
+    <div class="flex justify-around items-center m-6">
 
         <a href="{{ route('livealpine') }}" class="link link-accent" wire:current.exact="text-gray-500 pointer-events-none"
            wire:navigate.hover > livewire alpine counter page</a>

@@ -52,6 +52,37 @@ document.addEventListener('livewire:init', () => {
     })
 })
 
+document.addEventListener('livewire:init', ()=>{
+    Livewire.on('user_deleted', (data)=>{
+        console.log(data.id)
+        document.getElementById('user '+data.id).remove()
+    })
+
+    livewire.on('user_created', (data)=>{
+        console.log('craeted '+data.user)
+
+        let d = document.createElement('div').classList.add("border-1", "border-primary", "rounded-xl", "p-4", "text-center")
+        d.id = 'user ' + data.user.id
+        let h = document.createElement('h3')
+        h.innerText = data.user.name
+        let p = document.createElement('p')
+        p.innerText = data.user.email
+        let b = document.createElement('button')
+        b.innerText = 'delete user ' + data.user.id
+        b.classList.add("btn", "btn_error")
+        b.setAttribute("wire:click", `deleteuser(${data.user.id})`)
+
+        d.appendChild(h)
+        d.appendChild(p)
+        d.appendChild(b)
+        document.getElementById('user_container').prepend(d);
+
+        Livewire.rescan();
+    })
+})
+
+
+
 
 
 

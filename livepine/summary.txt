@@ -1,0 +1,112 @@
+notes for the future:
+    filtering presistence after refresh: livewire url query parameters OR sessions
+    i don't understand the use of computed properties
+    i can't be bothered to learn every method, i just know mount()
+
+things i can't be bothered to test but i found in the docs
+    redirecting: $this->redirectRoute('profile', ['id' => 1], navigate: true)
+    [#Locked] on top of a variable so it can't be modified from the front end
+
+
+things to make as a project
+    file uploads/downloads
+
+
+1/livewire
+-well just start by php artisan make:livewire component_name, you will get both a livewire class and a blade component
+-you can define variables and also methods, every methods triggers the render method
+-some useful blade attributes are:
+ wire:click="method_name", wire:submit="method_name", wire:model="variable_name", wire:ignore
+ wire.navigate for links, wire:current/wire:current.exact="classes here", wire:init="method_name", wire:poll, wire:text="" that replaces {{$variable}}
+ in methods in can also be wire:click="method_name(args)"
+ thera are a ton of others but for now that's enough
+
+-in the class these stuff are useful:
+ -pagination: gotta do this use Livewire\WithPagination; then inside the class  use WithPagination; then do with the pagiante stuff as an argument in the 
+    render method like this: public function render(){
+            return view('livewire.liveform',[
+                'users' => User::orderByDesc('created_at')->simplePaginate(5)
+            ]);
+        }
+    pagination only works inside the render method
+ 
+ -validation $val = $this->validate([
+                'name'=>['required'],
+                'email'=>['required', 'email', 'unique:users,email'],
+                'password'=>['required']
+            ]);
+    keep in mind name, email and password are defined variables that were treated like wire:click
+    when logging people in livewire autoatically regenarates the session so no need for request()->session()->regenerate() or @csrf
+    there is another way to validate using livewire specific tools, but i don't like em
+    otherwise you should be able to do everything likr in normal laravel
+
+ -dispatch
+  with livewire you can dispatch events, on both directions actually, there are two ways to receive dispatch from js but the main one is:
+    use Livewire\Attributes\On; then just above the method you want to get executed #[On('add')], add in this case being the name of the dispatch
+    sent by js like this: Livewire.dispatch('add', { key: 1 }) key being just an argument, BUT IT HAS TO HAVE THE SAME NAME AS IN THE METHOD, so receiving
+    would be #[On('add')]
+            public function handle($key){$this->count = $this->count + $key;}
+    or listeners = ['add'=>'handle', ]
+    so much better than calling an api or god forbis use ajax
+  for sending dispatch you simply do this: $this->dispatch("dis_test", message: "I'm BATMAN");
+    cathcing it with js: 
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('dis_test', (data) => {
+                console.log("yo")
+                let response = document.getElementById("dr")
+                response.innerHTML = "dispatch received, the data is " + data.message
+            })
+        })
+    catching it with alpine: 
+    <p x-data="{ x:'' }" x-on:dis_test.window="x = 'dispatch receieved, the message is: ' + $event.detail.message" x-text="x" class="text-success"></p>
+
+ -redirecting
+    $this->redirectRoute('profile', ['id' => 1]), navigate: true;
+    feel free to ommite the arguments
+
+there is obviously more to livewire than this, a ton more, but this is like 80% of it, update the page as needed
+
+ 
+    
+
+
+2/alpine
+alpine is awesome, it's a js library that comes bundled with livewire, they have the same craetor and tehy are very intertwined, alpine also does
+depend on normal js a lot of the time, so first, tha basics:
+-scope: in alpine define the varables in te parent div, you can also access them in children unless using fancy alpien stuff i didn't learn
+-directives: x-data="{x:5; y:9; w:'hry'}", @click="x=22", x-on:click="x=56", x-text="x", x-text="'yo'+x"
+         x-on is very unique as there are tools for keyup , keydown, hover, customized events, the whole work, but most importantly 
+            catching livewire dispatch so: x-on:livewire_dispatch_name.window = "x = $event.detail.livewire_variable" or you can jsut call some method 
+            defined in a js file with alpine.data
+         x-init="" to execute as soon as the element renders
+         there is also @click="$wire.variable" and "$wire.method" and "$wire.method(args)"
+         there is also x-show="variable", variable must be true or false
+         x-transition, that one has a shit ton of extensions to it
+         x-if and x-for that works on templates and i don't like because js .remove has supremecy
+         x-for, x-model that only works on inputs and x-ref which is kinda like id 
+
+-magic: magic properties are those who start with $ like $wire for example
+        $ref that is used to retreice x-ref element 
+        $el to retreive current dom element to do js stuff
+        $watch that watches an element and if it changes it executes a function: 
+            <div x-data="{ open: false }" x-init="$watch('open', value => console.log(value))">
+
+-globals: basically writing alpine in a js file, there are three globals but i only like one so far
+            Alpine.data('counter', () => ({
+                x: 0,
+                addx() {
+                    this.x += 1
+                    this.$wire.count = this.x
+                    dispatch like normal js
+                },
+            }))
+
+            then you call them in blade like this: <div x-data="counter" @click="add">
+
+again alpine is more than this, and as it stands i can't really manipulate it that well, but i will keep updating this page as i leafrn more, but this
+is enough to get started
+
+        
+
+
+        

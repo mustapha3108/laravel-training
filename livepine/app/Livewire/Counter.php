@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\{Auth, Storage};
 use Livewire\Component;
 use Livewire\Attributes\On;
 
@@ -36,6 +36,16 @@ class Counter extends Component
 
     public function send_dispatch(){
         $this->dispatch("dis_test", message: "I'm BATMAN");
+    }
+
+    public function createtext(){
+        Storage::disk('local')->put('example.txt', 'hello there crow');
+        Storage::disk('public')->put('test/raven.txt', 'raven yo');
+        return Storage::disk('public')->download('test/raven.txt');
+
+        //return Storage::download('file.jpg', $name, $headers);
+        //dd (asset('storage/test/raven.txt'));
+
     }
 
     public function render()

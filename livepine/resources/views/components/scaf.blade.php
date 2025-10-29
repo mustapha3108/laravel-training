@@ -18,6 +18,9 @@
            wire:navigate.hover > livewire alpine counter page</a>
         <a href="{{ route('form') }}" class="link link-accent" wire:current.exact="text-gray-500 pointer-events-none"
            wire:navigate.hover > form page </a>
+        <a href="{{ route('photo') }}" class="link link-accent" wire:current.exact="text-gray-500 pointer-events-none"
+           wire:navigate.hover > photo page </a>
+        
 
     </div>
     </body>

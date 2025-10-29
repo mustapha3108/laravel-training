@@ -3,6 +3,10 @@ notes for the future:
     i don't understand the use of computed properties
     i can't be bothered to learn every method, i just know mount()
 
+    composer require --dev barryvdh/laravel-ide-helper
+    php artisan ide-helper:generate
+
+
 things i can't be bothered to test but i found in the docs
     redirecting: $this->redirectRoute('profile', ['id' => 1], navigate: true)
     [#Locked] on top of a variable so it can't be modified from the front end

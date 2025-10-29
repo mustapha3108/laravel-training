@@ -75,8 +75,10 @@
                  class="text-success"></p>
             </div>
         </div>
+    </div>
 
-
+    <div>
+        <button class="btn" wire:click="createtext">craete text file with laravel file system</button>
     </div>
 
 </div>

@@ -1,0 +1,26 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@plugin "daisyui" {
+   themes: black --default;
+ }
+
+
+.myinput{
+  @apply focus:outline-0 border-1 ;
+}
+
+@layer base {
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  select:-webkit-autofill {
+    @apply bg-white text-gray-900;
+    transition: background-color 9999s ease-in-out 0s;
+  }
+}

@@ -1,0 +1,23 @@
+aight so for meilisearch
+
+-instal scout: composer require laravel/scout
+-publish vendor for scout: php artisan vendor:publish --provider="Laravel\Scout\ScoutServiceProvider"
+-install meilisearch-php : composer require meilisearch/meilisearch-php http-interop/http-factory-guzzle
+-install meilisearch binary: curl -L https://install.meilisearch.com | sh 
+-execute the binary like this: ./meilisearch --master-key="aSampleMasterKey"
+-add these to .env file:
+    SCOUT_DRIVER=meilisearch
+    MEILISEARCH_HOST=http://127.0.0.1:7700
+    MEILISEARCH_KEY=masterKey
+
+-add use Laravel\Scout\Searchable; and use Searchable; to the desired model 
+-add toSearchable method to the model:
+    public function toSearchableArray(): array
+        {
+            $array = $this->toArray();
+            return $array;
+        } 
+-import the desired model into scout: php artisan scout:import "App\Models\photo"
+
+-start using photo::search();
+

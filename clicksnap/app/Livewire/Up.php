@@ -20,7 +20,7 @@ class Up extends Component
             'description'=>"required|string|max:250",
             'category'=>"required|string|max:250",
             'keywords'=>"string|max:250",
-            'pic'=>"image|max:2048"
+            'pic'=>"image|max:4096"
         ]);
 
         $path = $this->pic->store(path:'uploads', options:'public');

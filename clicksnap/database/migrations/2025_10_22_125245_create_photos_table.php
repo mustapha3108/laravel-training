@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('category');
             $table->text('keywords')->nullable();
+            $table->unsignedBigInteger('likes');
             $table->timestamps();
 
             $table->foreign('user')->references('id')->on('users');

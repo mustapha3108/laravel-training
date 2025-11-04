@@ -20,4 +20,5 @@ aight so for meilisearch
 -import the desired model into scout: php artisan scout:import "App\Models\photo"
 
 -start using photo::search();
+-can be chained with photo::search()->where
 

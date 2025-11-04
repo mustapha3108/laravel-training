@@ -13,11 +13,12 @@
           <li><a>landscape</a></li>
           <li><a>nature</a></li>
           <li><a>architecture</a></li>
-          <li><a>fashion</a></li>
+          <li><a>fashion</a></li><x-css-close-o />
         </ul>
       </div>
       <!-- -->
-      <a href="#" class="text-xs">Help center</a>
+      <a href="#" class="">Help center</a>
+
      @guest
      <!-- Open the modal using ID.showModal() method -->
       <button class="btn btn-dash" onclick="my_modal_1.showModal()">signup or log in</button>
@@ -34,17 +35,23 @@
         </div>
       </dialog>
       @endguest 
+
      @auth
-      <div class="dropdown dropdown-center">
-        <div tabindex="0" role="button" class="btn m-1 brn-xs/6 text-sm/3 md:btn-md">account</div>
+
+     <a href="{{ route('upload') }}" wire:navigate class="btn btn-dash border-success">upload <x-fas-upload class="w-4"/></a>
+
+      <div class="dropdown dropdown-end">
+        <div tabindex="0" role="button" class=" m-1 brn-xs/6 text-sm/3 cursor-pointer">
+          <img src="{{ Storage::url(Auth::user()->pic) }}" alt="user image as menu" class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-md">
+        </div>
         <ul tabindex="-1" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
 
-          <li><a class="flex justify-between w-8/10">
-            <p>pload pictures</p> 
+          <li><a href="{{ route('upload') }}" wire:navigate class="flex justify-between">
+            <p>upload pictures</p>
             <x-fas-upload class="w-5"/>
           </a></li>
 
-          <li><a href="{{ route('account') }}" class="flex justify-between w-8/10">
+          <li><a href="{{ route('account') }}" class="flex justify-between">
             <p>account</p> 
             <x-codicon-account class="w-5" />
           </a></li>
@@ -94,36 +101,50 @@
         </div>
         <div class="drawer-side">
           <label for="my-drawer-5" aria-label="close sidebar" class="drawer-overlay"></label>
-          <ul class="menu bg-base-200 min-h-full w-80 p-4">
+          <ul class="menu bg-base-200 min-h-full w-80 p-4flex flex-col justify-between">
             <!-- Sidebar content here -->
+            <div>
+              <li><a>Categories</a></li>
+              <li><a>help center</a></li>
+            </div>
+
             <li><label for="my-drawer-5" aria-label="close sidebar" 
-            class="drawer-overlay btn">close menu</label></li>
-            <li><a>Categories</a></li>
-            <li><a>help center</a></li>
+             class="drawer-overlay btn">close menu</label></li>
           </ul>
         </div>
       </div>
     @endguest
     @auth
-      <a href="{{ route('upload') }}" wire:navigate class="btn btn-xs btn-dash border-success">upload <x-fas-upload class="w-2"/></a>
+      <a href="{{ route('upload') }}" wire:navigate class="btn btn-xs btn-dash border-success m-2">upload <x-fas-upload class="w-2"/></a>
 
       <div class="drawer drawer-end">
         <input id="my-drawer-5" type="checkbox" class="drawer-toggle" />
         <div class="drawer-content">
           <!-- replace with profile picture -->
-          <label for="my-drawer-5" class="drawer-button btn btn-ghost btn-xs"><x-css-menu /></label>
+          <label for="my-drawer-5" class="drawer-button m-1 brn-xs/6 text-sm/3 cursor-pointer hover:bg-none">
+            <!--x-css-menu /-->
+            <img src="{{ Storage::url(Auth::user()->pic) }}" alt="" class="w-8 h-8 rounded-full object-cover border-1 border-white shadow-md">
+          </label>
         </div>
         <div class="drawer-side">
           <label for="my-drawer-5" aria-label="close sidebar" class="drawer-overlay"></label>
-          <ul class="menu bg-base-200 min-h-full w-80 p-4">
+          <ul class="menu bg-base-200 min-h-full w-80 p-4 flex flex-col justify-between">
             <!-- Sidebar content here -->
+            <div>
+              <li><a href="{{ route('upload') }}" wire:navigate class="flex justify-between">
+                <span>upload photos</span>
+                 <x-fas-upload class="w-3"/>
+              </a></li>
+              <li><a href="{{ route('account') }}" wire:navigate class="flex justify-between">
+                <span>account</span> 
+                <x-codicon-account class="w-3" />
+              </a></li>
+              <livewire:logout/>
+            </div>
 
             <li><label for="my-drawer-5" aria-label="close sidebar" 
-            class="drawer-overlay btn right-2"><x-css-close-o /></label></li>
+             class="drawer-overlay btn right-2">close menu</label></li>
 
-          <li><a href="{{ route('upload') }}" wire:navigate>upload pictures</a></li>
-          <li><a href="{{ route('account') }}" wire:navigate>account</a></li>
-          <livewire:logout/>
           </ul>
         </div>
       </div>

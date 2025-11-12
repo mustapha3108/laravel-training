@@ -20,17 +20,27 @@
               <span class="">Homepage</span>
             </div>
 
-            <div href="{{ route('account') }}" wire:navigate wire:current.exact="bg-base-200"
+            <div href="{{ route('account') }}" wire:navigate wire:current.exact="bg-base-200 rounded-full"
              class="cursor-pointer p-2 rounded-xl w-10/10" data-tip="account">
               <x-codicon-account class="w-5" />
               <span class="">account</span>
             </div>
 
-            <div href="{{ route('upload') }}" wire:navigate wire:current.exact="bg-base-200 w-10"
-             class="cursor-pointer p-2 rounded-xl w-10/10" data-tip="account">
+            <div href="{{ route('upload') }}" wire:navigate wire:current.exact="bg-base-200 w-10 rounded-full"
+             class="cursor-pointer p-2 rounded-xl w-10/10" data-tip="upload pics">
               <x-fas-upload class="w-5"/>
               <span class="">upload pics</span>
             </div>
+
+
+            <div href="{{ route('mypics') }}" wire:navigate wire:current.exact="bg-base-200 rounded-full"
+             class="cursor-pointer p-2 rounded-xl w-10/10" data-tip="view my pics">
+              <x-tabler-photo-check class="w-5"/>
+              <span class="is-drawer-close:hidden">view my pictures</span>
+            </div>
+
+
+
           </div>
 
           <div class="modal-action">
@@ -62,7 +72,7 @@
               <!-- list items -->
 
               <li>
-                <a href="{{ route('welcome') }}" wire:navigate class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Homepage">
+                <a href="{{ route('welcome') }}" wire:navigate class="is-drawer-close:tooltip is-drawer-close:tooltip-right rounded-full" data-tip="Homepage">
                   <div>
                   <x-heroicon-o-home-modern class="w-5" />
                   </div>
@@ -71,22 +81,30 @@
               </li>
 
               <li>
-                <a href="{{ route('account') }}" wire:navigate wire:current.exact="bg-base-200"
-                 class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="account">
+                <a href="{{ route('account') }}" wire:navigate wire:current.exact="bg-base-200 rounded-full"
+                 class="is-drawer-close:tooltip is-drawer-close:tooltip-right rounded-full" data-tip="account">
                   <x-codicon-account class="w-5" />
                   <span class="is-drawer-close:hidden">account</span>
                 </a>
               </li>
 
-
-              <!-- logo or something -->
               <li>
-                <a href="{{ route('upload') }}" wire:navigate wire:current.exact="bg-base-200"
-                 class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="upload pics">
+                <a href="{{ route('upload') }}" wire:navigate wire:current.exact="bg-base-200 rounded-full"
+                 class="is-drawer-close:tooltip is-drawer-close:tooltip-right rounded-full" data-tip="upload pics">
                   <x-fas-upload class="w-5"/>
                   <span class="is-drawer-close:hidden">upload pics</span>
                 </a>
               </li>
+
+              <li>
+                <a href="{{ route('mypics') }}" wire:navigate wire:current.exact="bg-base-200 rounded-full"
+                 class="is-drawer-close:tooltip is-drawer-close:tooltip-right rounded-full" data-tip="view my pics">
+                  <x-tabler-photo-check class="w-5"/>
+                  <span class="is-drawer-close:hidden">view my pictures</span>
+                </a>
+              </li>
+
+
             </ul>
 
             <!-- button to open/close drawer -->

@@ -11,15 +11,18 @@
 
             <div class="flex flex-col justify-start  gap-2">
                 <label  class="label sm:text-xl">photo category</label >
-                <select wire:model='category' class="select myinput">
+                <select wire:model='category' class="select myinput" placeholder="choose a category">
                   <option>No Category</option>
-                  <option>Nature</option>
-                  <option>Architecture</option>
-                  <option>Landscape</option>
+                  <option>Nature and Landscape</option>
+                  <option>Floral</option>
+                  <option>Architecture and Cities</option>
+                  <option>Cars and Vehicules</option>
                   <option>Animals</option>
                   <option>Abstract</option>
-                  <option>City</option>
+                  <option>Dark</option>
                   <option>Fantasy</option>
+                  <option>Space</option>
+                  <option>Other</option>
                 </select>
                 @error('category') <p>{{ $message }} </p> @enderror
             </div>
@@ -37,7 +40,7 @@
             </div>
 
             <div class="flex flex-col justify-start gap-2">
-                <label  class='label '>picture, max:2MB</label >
+                <label  class='label '>picture, max: 4MB</label >
                 <input wire:model='pic' type="file" class="file-input file-input-ghost sm:w-120"/>
                 @error('pic') <p>{{ $message }} </p> @enderror
             </div>   

@@ -3,17 +3,23 @@
 <div class="hidden md:flex justify-between items-center mb-20">
   <div>
     <a style="font-family: 'Poppins', sans-serif;" class="text-md sm:text-3xl"
-    href="{{ route('welcome') }}">ClickSnap</a>
+    href="{{ route('welcome') }}" wire:navigate>ClickSnap</a>
   </div>
   <div class="flex justify-end items-center gap-3">
       <!--categories dropdow-->
       <div class="dropdown dropdown-center">
         <div tabindex="0" role="button" class="btn m-1 bg-base-100 border-0 btn-xs md:btn-md">Categories↓</div>
-        <ul tabindex="-1" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-          <li><a>landscape</a></li>
-          <li><a>nature</a></li>
-          <li><a>architecture</a></li>
-          <li><a>fashion</a></li><x-css-close-o />
+        <ul tabindex="-1" class="dropdown-content menu bg-base-100 rounded-box z-200 w-52 p-2 shadow-sm">
+          <a role="a" class="p-2" href="{{ route('browse', ['query'=>'nature and landscape']) }}">Nature and Landscape</a>
+          <a role="a" class="p-2" href="{{ route('browse', ['query'=>'floral']) }}">Floral</a>
+          <a role="a" class="p-2" href="{{ route('browse', ['query'=>'architecture and cities']) }}">Architecture and Cities</a>
+          <a role="a" class="p-2" href="{{ route('browse', ['query'=>'cars and vehicules']) }}">Cars and Vehicules</a>
+          <a role="a" class="p-2" href="{{ route('browse', ['query'=>'animals']) }}">Animals</a>
+          <a role="a" class="p-2" href="{{ route('browse', ['query'=>'abstarct']) }}">Abstract</a>
+          <a role="a" class="p-2" href="{{ route('browse', ['query'=>'dark']) }}">Dark</a>
+          <a role="a" class="p-2" href="{{ route('browse', ['query'=>'fantasy']) }}">Fantasy</a>
+          <a role="a" class="p-2" href="{{ route('browse', ['query'=>'space']) }}">Space</a>
+          <a role="a" class="p-2 pointer-event" href="{{ route('browse', ['query'=>'other']) }}">Other</a>
         </ul>
       </div>
       <!-- -->
@@ -115,7 +121,7 @@
       </div>
     @endguest
     @auth
-      <a href="{{ route('upload') }}" wire:navigate class="btn btn-xs btn-dash border-success m-2">upload <x-fas-upload class="w-2"/></a>
+      <a href="{{ route('upload') }}" wire:navigate class="btn btn-sm btn-dash border-success m-2">upload <x-fas-upload class="w-2"/></a>
 
       <div class="drawer drawer-end">
         <input id="my-drawer-5" type="checkbox" class="drawer-toggle" />
@@ -139,6 +145,38 @@
                 <span>account</span> 
                 <x-codicon-account class="w-3" />
               </a></li>
+
+              <details class="group rounded-lg w-full">
+                <summary class="font-semibold cursor-pointer flex items-center justify-between px-3 py-2 select-none">
+                  Categories
+                  <!-- Arrow that rotates -->
+                  <svg
+                    class="w-4 h-4 transition-transform duration-200 group-open:rotate-180"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </summary>
+              
+                <ul class="menu w-full rounded-box p-2 shadow-sm mt-2">
+                  <li><a href="{{ route('browse', ['query' => 'nature and landscape']) }}">Nature and Landscape</a></li>
+                  <li><a href="{{ route('browse', ['query' => 'floral']) }}">Floral</a></li>
+                  <li><a href="{{ route('browse', ['query' => 'architecture and cities']) }}">Architecture and Cities</a></li>
+                  <li><a href="{{ route('browse', ['query' => 'cars and vehicles']) }}">Cars and Vehicles</a></li>
+                  <li><a href="{{ route('browse', ['query' => 'animals']) }}">Animals</a></li>
+                  <li><a href="{{ route('browse', ['query' => 'abstract']) }}">Abstract</a></li>
+                  <li><a href="{{ route('browse', ['query' => 'dark']) }}">Dark</a></li>
+                  <li><a href="{{ route('browse', ['query' => 'fantasy']) }}">Fantasy</a></li>
+                  <li><a href="{{ route('browse', ['query' => 'space']) }}">Space</a></li>
+                  <li><a href="{{ route('browse', ['query' => 'other']) }}">Other</a></li>
+                </ul>
+              </details>
+
+
+
               <livewire:logout/>
             </div>
 

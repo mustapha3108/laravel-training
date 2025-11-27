@@ -1,0 +1,48 @@
+I NEED: 
+        PLACE TO GET BACKGROUNDS
+        TOOLS TO MODIFY IMAGES
+
+
+
+this time:
+    just a simple website, no users, no downloads, no meilisearch, no octane, just a dashboard, and an interface and a form to order.
+    so the interface design, just shirts so on sale, new, men's women's, put that on the navbar.
+    i was thinking a deep blue hero background, small bubble like navbar on top, and name and slogan on hero
+    under it, maybe a looping announcement, give admin ability to add announcements
+    then i guess category wallpaper thing on left and a few products on right, with show more link, things like classy, anime, sports
+    footer with location and contact
+    add filter in browsing page, no footer, replace navbar with search bar and under it the filtering stuff, add logo on top of that, or just a font thing
+    add client side cart i guess
+    cart has to be visible in browsing and home, put it in the navbar/search bar
+    white theme this time
+    dashboard has to invlove, delete, update and creat so crud for shirts, with types for both gender/childre and category, sizes, colors, multiple uploads at once 
+    creat and delete announcements
+    
+
+
+
+
+next time:
+right so small white wide div: announcements
+navbar: on sale, men, women, sports, small: search, account, cart, menu for contact and locations
+    phonenav: menu(men, women, sports, small:menu for contact and locations )
+halfway bar: new, on sale
+
+hero: plain deep blue background, large bald text(like high quality thing), brand name, check our collection
+under it, a looping video that says, made with passion to be perfect gift or some shit or some shit
+under it carousel for new in seperate categories
+under it luxury items with some fancy people
+under it triple carousel, men, women and children products
+sportswear thing
+newsletter thing
+footer thing
+
+searchbar is a model that takes the whole page, close by clicking on the magnifying glass again
+on product display pages, sort and filter
+on product page details right, photos left
+
+
+note: mind your components, don't mess this up
+
+
+next time those sliding sections thing website

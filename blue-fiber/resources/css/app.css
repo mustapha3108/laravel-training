@@ -1,0 +1,33 @@
+@import 'tailwindcss';
+
+@import url('https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Cursive:wght@400..700&display=swap');
+
+
+.herofont {
+  font-family: "Edu NSW ACT Cursive", cursive;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+
+@plugin "daisyui" {
+  themes: emerald --default;
+}
+
+.herobg {
+  background: linear-gradient(
+    120deg,
+    #003153,
+    #005f8f,
+    #001a2d
+  );
+  background-size: 300% 300%;
+  animation: gradient-move 12s ease-in-out infinite;
+}
+
+@keyframes gradient-move {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}

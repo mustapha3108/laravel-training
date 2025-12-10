@@ -1,6 +1,42 @@
-I NEED: 
-        PLACE TO GET BACKGROUNDS
-        TOOLS TO MODIFY IMAGES
+--Database/Models
+    Product:
+        id, name, type, category, keywords, description, sales,
+         photo paths (yes multiple, string parsing ma dude);
+
+    Orders:
+        id, customer_name, customer_number, customer_address,
+         [optional] location, product_id, product_count
+
+
+    Announcement:
+        id, string;
+    
+    Admin:
+        already done;
+
+--Dashboard:
+    pages:
+        add products and announcement => form
+        search + update and delete products => cards + seperate admin products page
+        update account => just forms
+        orders => display and mark as done/delete
+
+    navigation + logout:
+        wide: sidebar && phone: drawer
+
+--Browsing page
+    big ass logo on top + filter navbar => men, women, unisex, children, all, should be a massive select next to searchbar
+     + a searchbar + categories.
+    product car => photo + title + price + cart + link to product page + hover zoom effect or other animation
+
+
+
+
+    
+
+
+
+
 
 
 

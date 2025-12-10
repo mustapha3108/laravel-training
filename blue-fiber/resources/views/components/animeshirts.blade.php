@@ -1,5 +1,5 @@
 <div class="p-3 py-12">
-    <div class="card lg:card-side bg-base-100 shadow-sm w-ful">
+    <div class="card lg:card-side bg-linear-to-b md:bg-linear-to-r from-base-200 to-accent via-secondary shadow-sm w-ful">
         <figure>
             <img src="/yuji.png"
                  alt="nruto" 

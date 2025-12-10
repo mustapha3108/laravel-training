@@ -10,7 +10,7 @@
  
         @livewireStyles
     </head>
-    <body class="bg-black">
+    <body class="">
 
         {{ $slot }}
  

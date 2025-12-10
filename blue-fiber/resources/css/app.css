@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import 'animate.css';
 
 @import url('https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Cursive:wght@400..700&display=swap');
 
@@ -12,22 +13,58 @@
 
 
 @plugin "daisyui" {
-  themes: emerald --default;
+  themes: business --default;
 }
 
-.herobg {
-  background: linear-gradient(
-    120deg,
-    #003153,
-    #005f8f,
-    #001a2d
-  );
-  background-size: 300% 300%;
-  animation: gradient-move 12s ease-in-out infinite;
+.slow-fadein{
+  --animate-duration: 5s;
 }
 
-@keyframes gradient-move {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+/*up and down infinite animation*/
+@keyframes updown {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
 }
+.updown-animation {
+  animation: updown 4s ease-in-out infinite;
+}
+
+/*highlight animation*/
+@keyframes highlight {
+  0% {
+    background-size: 0% 100%;
+  }
+  100% {
+    background-size: 100% 100%;
+  }
+}
+.highlight-animation {
+  background-image: linear-gradient(to right, #005f8f, #191970);
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  animation: highlight 3s ease 2s forwards;
+}
+
+
+/*
+.marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  background: #111;
+  color: #fff;
+  padding: 8px 0;
+}
+
+.marquee-inner {
+  display: inline-block;
+  padding-left: 100%;
+  animation: scroll 30s linear infinite;
+}
+
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+*/
+
+

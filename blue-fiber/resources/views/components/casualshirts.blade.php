@@ -1,5 +1,5 @@
-<div class="p-3 py-12">
-    <div class="card lg:card-side bg-base-200 shadow-sm w-ful">
+<div class="p-3 py-12" data-aos="fade-up" data-aos-duration="1000">
+    <div class="card lg:card-side bg-linear-to-b md:bg-linear-to-r from-base-200 to-success via-secondary shadow-sm w-ful">
         <figure>
             <img src="/funny4.png"
                  alt="nruto" 

@@ -46,6 +46,26 @@
 }
 
 
+@keyframes underline {
+  0% {
+    background-size: 0% 3px;
+  }
+  100% {
+    background-size: 100% 3px;
+  }
+}
+
+.underline-animation {
+  background-image: linear-gradient(to right, #005f8f, #191970);
+  background-repeat: no-repeat;
+  /*background-position: 0 100%; /* stick to bottom */
+  background-position: 0 calc(100% - 2px);
+  background-size: 0% 3px;     /* underline thickness */
+  animation: underline 3s ease 2s forwards;
+}
+
+
+
 /*
 .marquee {
   overflow: hidden;

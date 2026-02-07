@@ -31,7 +31,7 @@
                 </div>
             
                 <div class="flex flex-col justify-center items-center md:mt-12 text-white text-center w-full">
-                    <h1 class="herofont text-4xl md:text-7xl m-4 w-full  animate__animated animate__fadeIn slow-fadein">Blue Fiber</h1>
+                    <h1 class="underline-animation herofont text-4xl md:text-7xl m-4  animate__animated animate__fadeIn slow-fadein">Blue Fiber</h1>
                     <h2 class="text-md sm:text-2xl mb-6 p-1 rounded highlight-animation">Where Comfort Meets Craft.</h2>
                     <div class="flex justify-center gap-15 md:gap-36 m-4 w-full">
                         <button class="btn btn-primary border-0 w-25 updown-animation">On Sale</button>
